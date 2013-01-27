@@ -1,0 +1,25 @@
+<h1>Guests - Index</h1>
+<%= render 'form' %>
+<table>
+    <tr>
+        <th>id</th>
+        <th>firstname</th>
+        <th>lastname</th>
+        <th>birthday</th>
+        <th>current_city</th>
+        <th>tracker_id</th>
+        <th>action</th>
+    </tr>
+<% @guests.each do |guest| %>
+    <tr>
+        <td><%= guest.id %></td>
+        <td><%= guest.first_name %></td>
+        <td><%= guest.last_name %></td>
+        <td><%= guest.birthday %></td>
+        <td><%= guest.current_city %></td>
+        <td><%= guest.tracker_id %></td>
+        <td><%= link_to 'Delete', guest, :method => :delete %> | <%= link_to 'Edit', edit_guest_path(guest) %></td>
+    </tr>
+<% end %>
+</table>
+

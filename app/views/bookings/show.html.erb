@@ -1,0 +1,23 @@
+<h1>Booking - Show</h1>
+<table>
+    <tr>
+        <th>id</th>
+        <th>from</th>
+        <th>until</th>
+    </tr>
+    <tr>
+        <td><%= @booking.id %></td>
+        <td><%= @booking.from %></td>
+        <td><%= @booking.until %></td>
+    </tr>
+</table>
+
+<script text="javascript">
+    $(document).ready(function() {
+        // Stuff to do as soon as the DOM is ready;
+        $.getJSON('http://localhost:3000/bookings/<%= @booking.id %>', function(data) {
+            console.log(data);
+        });
+    });
+
+</script>

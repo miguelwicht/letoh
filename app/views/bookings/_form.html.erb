@@ -1,0 +1,9 @@
+<%= form_for @booking do |f| %>
+    <%= f.label :from %>
+    <%= f.text_field :from %>
+    <%= f.label :until %>
+    <%= f.text_field :until %>
+    <%= f.label :room_id %>
+    <%= f.text_field :room_id %>
+  <%= f.submit %>
+<% end %>

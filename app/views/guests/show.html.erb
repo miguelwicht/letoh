@@ -1,0 +1,58 @@
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        var JSONObject=  {
+             guest: {
+                      birthday: "1990-12-01",
+                      current_city: "current_city",
+                      first_name: "first_name",
+                      last_name: "last_name",
+                      tracker_id: "4"
+            }
+        };
+    $.ajax({
+            type: "POST",
+            url : "http://localhost:3000/guests",
+            cache: false,
+            processData: true,
+            dataType: "json",
+            data: JSONObject,
+             statusCode: {
+
+                 200:function() { alert("200"); },
+                 202:function() { alert("202"); }
+            },
+            success: function() {  alert("Data Send!");},
+            error: function(xhr){console.log(xhr);}
+        });
+    });
+    </script>
+<h1>Guest - Show</h1>
+<table>
+    <tr>
+        <th>id</th>
+        <th>firstname</th>
+        <th>lastname</th>
+        <th>birthday</th>
+        <th>current_city</th>
+        <th>tracker_id</th>
+    </tr>
+    <tr>
+        <td><%= @guest.id %></td>
+        <td><%= @guest.first_name %></td>
+        <td><%= @guest.last_name %></td>
+        <td><%= @guest.birthday %></td>
+        <td><%= @guest.current_city %></td>
+        <td><%= @guest.tracker_id %></td>
+    </tr>
+</table>
+
+<script text="javascript">
+    $(document).ready(function() {
+        // Stuff to do as soon as the DOM is ready;
+        $.getJSON('http://localhost:3000/guests/<%= @guest.id %>', function(data) {
+            console.log(data);
+        });
+    });
+
+</script>
