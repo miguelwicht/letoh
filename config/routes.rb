@@ -1,6 +1,8 @@
 Letoh::Application.routes.draw do
   resources :guests
   resources :bookings
+  resources :interests
+  resources :importances
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -1,0 +1,21 @@
+<h1>Importances - Index</h1>
+<%= render 'form' %>
+<table>
+    <tr>
+        <th>id</th>
+        <th>guest_id</th>
+        <th>interest_id</th>
+        <th>importance</th>
+        <th>action</th>
+    </tr>
+<% @importances.each do |importance| %>
+    <tr>
+        <td><%= importance.id %></td>
+        <td><%= importance.guest_id %></td>
+        <td><%= importance.interest_id %></td>
+        <td><%= importance.importance %></td>
+        <td><%= link_to 'Delete', importance, :method => :delete %> | <%= link_to 'Edit', edit_importance_path(importance) %></td>
+    </tr>
+<% end %>
+</table>
+

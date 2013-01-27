@@ -1,0 +1,46 @@
+<h1>Interest- Show</h1>
+<table>
+    <tr>
+        <th>id</th>
+        <th>name</th>
+    </tr>
+    <tr>
+        <td><%= @interest.id %></td>
+        <td><%= @interest.name %></td>
+    </tr>
+</table>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var JSONObject=  {
+             importance: {
+                      guest_id: "1",
+                      interest_id: "1",
+                      importance: "50"
+            }
+        };
+    $.ajax({
+            type: "POST",
+            url : "http://localhost:3000/importances",
+            cache: false,
+            processData: true,
+            dataType: "json",
+            data: JSONObject,
+             statusCode: {
+
+                 200:function() { alert("200"); },
+                 202:function() { alert("202"); }
+            },
+            success: function() {  alert("Data Send!");},
+            error: function(xhr){console.log(xhr);}
+        });
+    });
+</script>
+<script text="javascript">
+    $(document).ready(function() {
+        // Stuff to do as soon as the DOM is ready;
+        $.getJSON('http://localhost:3000/importances/<%= @importances.id %>', function(data) {
+            console.log(data);
+        });
+    });
+
+</script>
