@@ -50,7 +50,7 @@ class InterestsController < ApplicationController
 
     def update
         interest= Interest.find params[:id]
-        if interest.update_attributes params[:guest]
+        if interest.update_attributes params[:interest]
             redirect_to interests_path, :notice => 'Your interest has successfully been updated.'
         else
             redirect_to :back, :notice => 'There was an error updating your interest.'

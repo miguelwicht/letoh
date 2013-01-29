@@ -1,8 +1,12 @@
 Letoh::Application.routes.draw do
+  match 'pois/guest/:id' => 'pois#guest'
   resources :guests
   resources :bookings
   resources :interests
   resources :importances
+  resources :routes
+  resources :pois
+  resources :categorizations
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -50,7 +50,7 @@ class ImportancesController < ApplicationController
 
     def update
         importance= Importance.find params[:id]
-        if importance.update_attributes params[:guest]
+        if importance.update_attributes params[:importance]
             redirect_to importances_path, :notice => 'Your importance has successfully been updated.'
         else
             redirect_to :back, :notice => 'There was an error updating your importance.'

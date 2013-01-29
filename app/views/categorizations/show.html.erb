@@ -1,0 +1,48 @@
+<h1>Categorization- Show</h1>
+<table>
+    <tr>
+        <th>id</th>
+        <th>poi_id</th>
+        <th>interest_id</th>
+    </tr>
+    <tr>
+        <td><%= @categorization.id %></td>
+        <td><%= @categorization.poi_id %></td>
+        <td><%= @categorization.interest_id %></td>
+    </tr>
+</table>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var JSONObject=  {
+             categorization: {
+                      guest_id: "2",
+                      interest_id: "2",
+                      categorization: "75"
+            }
+        };
+    $.ajax({
+            type: "POST",
+            url : "http://localhost:3000/categorizations",
+            cache: false,
+            processData: true,
+            dataType: "json",
+            data: JSONObject,
+             statusCode: {
+
+                 200:function() { alert("200"); },
+                 202:function() { alert("202"); }
+            },
+            success: function() {  alert("Data Send!");},
+            error: function(xhr){console.log(xhr);}
+        });
+    });
+</script>
+<script text="javascript">
+    $(document).ready(function() {
+        // Stuff to do as soon as the DOM is ready;
+        $.getJSON('http://localhost:3000/categorizations/<%= @categorization.id %>', function(data) {
+            console.log(data);
+        });
+    });
+
+</script>

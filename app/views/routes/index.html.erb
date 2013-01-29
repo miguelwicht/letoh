@@ -1,0 +1,23 @@
+<h1>Routes - Index</h1>
+<%= render 'form' %>
+<table>
+    <tr>
+        <th>id</th>
+        <th>route</th>
+        <th>active</th>
+        <th>created_at</th>
+        <th>updtaed_at</th>
+        <th>actions</th>
+    </tr>
+<% @routes.each do |route| %>
+    <tr>
+        <td><%= route.id %></td>
+        <td><%= route.route %></td>
+        <td><%= route.active %></td>
+        <td><%= route.created_at %></td>
+        <td><%= route.updated_at %></td>
+        <td><%= link_to 'Delete', route, :method => :delete %> | <%= link_to 'Edit', edit_route_path(route) %></td>
+    </tr>
+<% end %>
+</table>
+
