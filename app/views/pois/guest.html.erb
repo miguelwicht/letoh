@@ -4,9 +4,16 @@
 
 <h1>POIs - Index</h1>
 <div data-pois="<%= @pois.to_json %>">
-  <%= @pois.to_json %>
+    <%= @pois.to_json %>
 </div>
-<div data-interests="<%= @interests.to_json %>"></div>
+<div data-interests="<%= @interests.to_json %>">
+  <%= @interests.to_json %>
+</div>
+
+<div data-userpois="<%= @user_pois.to_json %>">
+  <%= @user_pois.to_json %>
+</div>
+
 <table id="pois">
     <tr>
         <th>id</th>

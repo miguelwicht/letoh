@@ -60,7 +60,14 @@ class PoisController < ApplicationController
     def guest
         #@pois = Poi.includes(:categorizations)#.includes(:interests)#.includes(:guests).where(:guests => {:id => params[:id]})
         @interests = Interest.includes(:importances).where(:importances => {:guest_id => params[:id]})#.includes(:importances)#.includes(:categorizations)#.includes(:interests)#.includes(:guests).where(:guests => {:id => params[:id]})
-        @user_pois = Importance.includes(:categorizations)
+        user_pois = []
+        @interests.each_with_index do |interest, index|
+            user_pois[index] = Categorization.where(:interest_id => interest.id)
+        end
+
+        @user_pois = user_pois
+
+        #@user_pois = Importance.includes(:categorizations)
         @pois = Poi.all
         #@pois = Importance.where(:importances => {:guest_id => params})
         respond_to do |format|
