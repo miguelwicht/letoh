@@ -58,14 +58,29 @@ class PoisController < ApplicationController
     # GET /pois/guest/1
     # GET /pois/guest/1.json
     def guest
-        #@pois = Poi.includes(:categorizations)#.includes(:interests)#.includes(:guests).where(:guests => {:id => params[:id]})
+        #query all interests that have an importance for the guest
         @interests = Interest.includes(:importances).where(:importances => {:guest_id => params[:id]})#.includes(:importances)#.includes(:categorizations)#.includes(:interests)#.includes(:guests).where(:guests => {:id => params[:id]})
+
+        #query the matching pois for each interest
         user_pois = []
         @interests.each_with_index do |interest, index|
             user_pois[index] = Categorization.where(:interest_id => interest.id)
         end
 
         @user_pois = user_pois
+        @user_pois.to_json
+
+        #rearrange the pois
+        map_pois = []
+        @user_pois.each_with_index do |cat, index|
+            cat.each_with_index do |poi, i|
+                map_pois.push(Poi.includes(:categorizations).where(:categorizations =>{:poi_id => poi.poi_id}))
+            end
+        end
+
+        @map_pois = map_pois
+        @map_pois.to_json
+
 
         #@user_pois = Importance.includes(:categorizations)
         @pois = Poi.all

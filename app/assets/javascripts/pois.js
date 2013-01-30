@@ -54,19 +54,33 @@ function calcRoute() {
         //waypoints.push({optimize:true});
 
         var pois = $('#pois').data('pois');
+        console.log(pois);
         var geoLoc;
+        // console.log(pois.count);
         $.each(pois,function(i, poi)
         {
-            console.log(i);
+            // console.log(poi);
             geoLoc = ""+poi.lat+","+poi.long+"";
             waypoints.push({
                 location: geoLoc,
                 stopover: true
             });
-            console.log(waypoints);
+            // console.log(waypoints);
         });
-        var start = pois[0].lat + "," + pois[0].long;
-        var end = pois[pois.length-1].lat + "," + pois[pois.length-1].long;// endpoint is a geolocation
+
+        // $.each(pois[1],function(i, poi)
+        // {
+        //     // console.log(i);
+        //     geoLoc = ""+poi.lat+","+poi.long+"";
+        //     waypoints.push({
+        //         location: geoLoc,
+        //         stopover: true
+        //     });
+        //      // console.log(waypoints);
+        // });
+
+        // var start = pois[0].lat + "," + pois[0].long;
+        // var end = pois[pois.length-1].lat + "," + pois[pois.length-1].long;// endpoint is a geolocation
     }
 
     var request = {
