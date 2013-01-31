@@ -12,7 +12,7 @@ var directionsService = new google.maps.DirectionsService();
 function initialize() {
     var latlng = new google.maps.LatLng(51.764696,5.526042);
     // set direction render options
-    var rendererOptions = { draggable: true };
+    var rendererOptions = { draggable: false };
     directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
     var myOptions = {
         zoom: 14,
@@ -35,53 +35,21 @@ function initialize() {
 function calcRoute() {
     // get the travelmode, startpoint and via point from the form
     var travelMode = $('input[name="travelMode"]:checked').val();
-    var start = $("#routeStart").val();
-    var via = $("#routeVia").val();
-
-    if (travelMode == 'TRANSIT')
-    {
-        via = ''; // if the travel mode is transit, don't use the via waypoint because that will not work
-    }
-    var end = "51.764696,5.526042"; // endpoint is a geolocation
+    var start = "Berlin, Brandenburger Tor";
+    var end = "Berlin, Hotel Atlon"; // endpoint is a geolocation
     var waypoints = []; // init an empty waypoints array
-    if (via != '')
+
+    var pois = $('#pois').data('pois');
+    console.log(pois);
+
+    $.each(pois,function(i, poi)
     {
-        // if waypoints (via) are set, add them to the waypoints array
-        // waypoints.push({
-        //   location: via,
-        //   stopover: true
-        // });
-        //waypoints.push({optimize:true});
-
-        var pois = $('#pois').data('pois');
-        console.log(pois);
-        var geoLoc;
-        // console.log(pois.count);
-        $.each(pois,function(i, poi)
-        {
-            // console.log(poi);
-            geoLoc = ""+poi.lat+","+poi.long+"";
-            waypoints.push({
-                location: geoLoc,
-                stopover: true
-            });
-            // console.log(waypoints);
+        waypoints.push({
+            location: poi.lat+","+poi.long,
+            stopover: true
         });
+    });
 
-        // $.each(pois[1],function(i, poi)
-        // {
-        //     // console.log(i);
-        //     geoLoc = ""+poi.lat+","+poi.long+"";
-        //     waypoints.push({
-        //         location: geoLoc,
-        //         stopover: true
-        //     });
-        //      // console.log(waypoints);
-        // });
-
-        // var start = pois[0].lat + "," + pois[0].long;
-        // var end = pois[pois.length-1].lat + "," + pois[pois.length-1].long;// endpoint is a geolocation
-    }
 
     var request = {
         origin: start,

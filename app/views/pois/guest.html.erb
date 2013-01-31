@@ -16,15 +16,16 @@
 
 <h2>user pois</h2>
 
-<div id="pois" data-pois="<%= @map_pois = @map_pois.flatten(1).to_a.uniq.to_json %>">
+<div id="pois" data-pois="<%= @map_pois %>">
 <%= @map_pois %>
 </div>
 
 
 
 <div id="map_canvas" style="width:700px; height:700px"></div>
+
   <form action="/routebeschrijving" onSubmit="calcRoute();return false;" id="routeForm">
-    <div style="overflow: hidden; width: 500px; margin: 0 auto;">
+    <div style="overflow: hidden; width: 500px; margin: 0 0;">
       <div style="width: 350px; float: left; text-align: left;">
         <label>
           From: <br />
@@ -36,15 +37,15 @@
         </label>
       </div>
       <div style="width: 150px; float: left; text-align: left;">
-        <label>Travel mode:</label>
-        <label><input type="radio" name="travelMode" value="DRIVING" checked /> Driving</label>
-        <label><input type="radio" name="travelMode" value="BICYCLING" /> Bicylcing</label>
-        <label><input type="radio" name="travelMode" value="TRANSIT" /> Public transport</label>
+        <label>Travel mode:</label><br />
+        <label><input type="radio" name="travelMode" value="DRIVING" checked /> Driving</label><br />
+        <label><input type="radio" name="travelMode" value="BICYCLING" /> Bicylcing</label><br />
+        <label><input type="radio" name="travelMode" value="TRANSIT" /> Public transport</label><br />
         <label><input type="radio" name="travelMode" value="WALKING" /> Walking</label>
       </div>
     </div>
     <input type="submit" value="Calculate route">
   </form>
-  <div id="directionsPanel">
+<!--   <div id="directionsPanel">
     Enter a destination and click "Calculate route".
-  </div>
+  </div> -->
