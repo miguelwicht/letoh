@@ -1,4 +1,6 @@
 class ImportancesController < ApplicationController
+    protect_from_forgery :except => :create
+
     # GET /importances
     # GET /importances.json
     def index
@@ -24,23 +26,38 @@ class ImportancesController < ApplicationController
 
     def create
         #render :text => params.inspect
-        Importance.create params[:importance]
-        # if @guest.save
-        #     format.html { redirect_to @guest, notice: 'Guest was successfully created.' }
-        #     format.json { render json: @guest, status: :created, location: @guest }
-        # else
-        #     format.html { render action: "new" }
-        #     format.json { render json: @guest.errors, status: :unprocessable_entity }
-        # end
-        redirect_to importances_path
+        #logger.debug params.inspect
+        #Importance.create params[:importance]
+
+        # Data send from Flash are not nested in :importance object so this has to be handled differently
+        if (params[:interest_id] && params[:guest_id] && params[:importance])
+
+            Importance.find_or_initialize_by_guest_id_and_interest_id(
+                 params[:guest_id], params[:interest_id]
+                 ).tap do |a|
+                    if (a.importance.to_i > 0)
+                        a.importance = (a.importance.to_i + params[:importance].to_i) / 2
+                    else
+                        a.importance = params[:importance].to_i
+                    end
+                    @importance = a
+                end.save!
+
+            #@importance = {:interest_id => params[:interest_id], :guest_id => params[:guest_id], :importance => params[:importance]}
+            #Importance.create @importance
+                render json: @importance
+        else
+            Importance.create params[:importance]
+            redirect_to importances_path
+        end
     end
 
     # GET /importances/new
     def new
-          @importance = Importance.new
-          respond_to do |format|
+        @importance = Importance.new
+        respond_to do |format|
             format.html #index.html.erb
-            format.json { render json: @importances }
+            format.json { render json: @importance }
         end
     end
 

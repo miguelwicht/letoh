@@ -59,7 +59,7 @@ class PoisController < ApplicationController
     # GET /pois/guest/1.json
     def guest
         #query all interests that have an importance for the guest
-        @interests = Interest.includes(:importances).where(:importances => {:guest_id => params[:id]})#.includes(:importances)#.includes(:categorizations)#.includes(:interests)#.includes(:guests).where(:guests => {:id => params[:id]})
+        @interests = Interest.includes(:importances).where(:importances => {:guest_id => params[:id]})
 
         #query the matching pois for each interest
         user_pois = []
