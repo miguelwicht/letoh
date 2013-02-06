@@ -12,7 +12,7 @@
     </tr>
 <% @guests.each do |guest| %>
     <tr>
-        <td><%= guest.id %></td>
+        <td><a href="/pois/guest/<%= guest.id %>"><%= guest.id %></a></td>
         <td><%= guest.first_name %></td>
         <td><%= guest.last_name %></td>
         <td><%= guest.birthday %></td>

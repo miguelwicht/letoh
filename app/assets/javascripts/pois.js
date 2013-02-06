@@ -3,8 +3,15 @@
 // # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $(document).ready(function(){
-    initialize();
-    calcRoute();
+    if ($('.map').length > 0)
+    {
+        initialize();
+    }
+    if ($('.route').length > 0)
+    {
+
+        calcRoute();
+    }
 });
 
 var directionDisplay;
@@ -25,16 +32,17 @@ function initialize() {
     directionsDisplay.setMap(map);
     directionsDisplay.setPanel(document.getElementById("directionsPanel"));
     // Add a marker to the map for the end-point of the directions.
-    var marker = new google.maps.Marker({
-        position: latlng,
-        map: map,
-        title:"Rodderhof, Oss"
-    });
+    // var marker = new google.maps.Marker({
+    //     position: latlng,
+    //     map: map,
+    //     title:"Rodderhof, Oss"
+    // });
 }
 
 function calcRoute() {
     // get the travelmode, startpoint and via point from the form
-    var travelMode = $('input[name="travelMode"]:checked').val();
+    // var travelMode = $('input[name="travelMode"]:checked').val();
+    var travelMode = "DRIVING";
     var start = "Berlin, Brandenburger Tor";
     var end = "Berlin, Hotel Atlon"; // endpoint is a geolocation
     var waypoints = []; // init an empty waypoints array

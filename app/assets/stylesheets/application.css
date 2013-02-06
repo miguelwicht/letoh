@@ -11,3 +11,60 @@
  *= require_self
  *= require_tree .
  */
+
+body {
+    margin:0px;
+    font-family: Futura;
+}
+h1, h2, h3, h4, h5 {
+    font-family: Futura;
+    color:#004b5e;
+    margin-top: 0px;
+}
+
+nav, .nav {
+    padding:0px 20px 0px 20px;
+    height:35px;
+    /*line-height: 30px;*/
+    vertical-align: middle;
+    background: #004b5e; /* Old browsers */
+}
+
+.nav a, .nav a:link, .nav a:visited, .nav a:active {
+    color:white;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 35px;
+    vertical-align: middle;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.container {
+    width:100%;
+    /*margin:10px 0px 10px 0px;*/
+    overflow: auto;
+}
+
+.half {
+    width:50%;
+    padding:10px 20px 10px 20px;
+    float:left;
+    box-sizing:border-box;
+}
+
+.profile img {
+    width:100px;
+    height: auto;
+    float: left;
+}
+
+.profile ul {
+    float:left;
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+.half.map-wp {
+    min-width: 400px;
+}

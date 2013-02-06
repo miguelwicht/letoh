@@ -59,6 +59,8 @@ class PoisController < ApplicationController
     # GET /pois/guest/1.json
     def guest
         #get sum of all importances
+        @guest = Guest.where(:id => params[:id]).first!
+
         @sum = Importance.where(:guest_id => params[:id]).sum('importance')
 
         #query all interests that have an importance for the guest
@@ -83,8 +85,8 @@ class PoisController < ApplicationController
             end
         end
 
-        @map_pois = map_pois.flatten(1).to_a.uniq.to_json
-
+        #@map_pois = map_pois.flatten(1).to_a.uniq.to_json
+        @map_pois = map_pois.flatten(1).to_a.uniq
         respond_to do |format|
             format.html #index.html.erb
             format.json { render json: @map_pois }
