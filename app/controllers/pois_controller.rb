@@ -58,20 +58,28 @@ class PoisController < ApplicationController
     # GET /pois/guest/1
     # GET /pois/guest/1.json
     def guest
+        #get sum of all importances
+        @sum = Importance.where(:guest_id => params[:id]).sum('importance')
+
         #query all interests that have an importance for the guest
         @interests = Interest.includes(:importances).where(:importances => {:guest_id => params[:id]})
 
         #query the matching pois for each interest
+        #categories
         user_pois = []
         @interests.each_with_index do |interest, index|
-            user_pois[index] = Categorization.where(:interest_id => interest.id)
+            user_pois[index] = []
+            user_pois[index].push(Categorization.where(:interest_id => interest.id))
+            user_pois[index].push( ((Importance.where(:guest_id => params[:id]).where(:interest_id => interest.id).sum('importance').to_f / @sum) * 8).round )
         end
 
         #rearrange the pois
         map_pois = []
         user_pois.each_with_index do |cat, index|
-            cat.each_with_index do |poi, i|
-                map_pois.push(Poi.includes(:categorizations).where(:categorizations =>{:poi_id => poi.poi_id}))
+            cat[1].times do |i|
+                if cat[0].count > i
+                    map_pois.push(Poi.includes(:categorizations).where(:categorizations =>{:poi_id => cat[0][i-1].poi_id}))
+                end
             end
         end
 
@@ -81,5 +89,31 @@ class PoisController < ApplicationController
             format.html #index.html.erb
             format.json { render json: @map_pois }
         end
+
+
+        #-----------------------------------------------------------------------
+        # #query all interests that have an importance for the guest
+        # @interests = Interest.includes(:importances).where(:importances => {:guest_id => params[:id]})
+
+        # #query the matching pois for each interest
+        # user_pois = []
+        # @interests.each_with_index do |interest, index|
+        #     user_pois[index] = Categorization.where(:interest_id => interest.id)
+        # end
+
+        # #rearrange the pois
+        # map_pois = []
+        # user_pois.each_with_index do |cat, index|
+        #     cat.each_with_index do |poi, i|
+        #         map_pois.push(Poi.includes(:categorizations).where(:categorizations =>{:poi_id => poi.poi_id}))
+        #     end
+        # end
+
+        # @map_pois = map_pois.flatten(1).to_a.uniq.to_json
+
+        # respond_to do |format|
+        #     format.html #index.html.erb
+        #     format.json { render json: @map_pois }
+        # end
     end
 end
