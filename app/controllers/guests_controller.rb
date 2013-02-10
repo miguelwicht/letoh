@@ -1,4 +1,5 @@
 class GuestsController < ApplicationController
+    protect_from_forgery :except => :create
     # GET /guests
     # GET /guests.json
     def index
@@ -24,15 +25,28 @@ class GuestsController < ApplicationController
 
     def create
         #render :text => params.inspect
-        Guest.create params[:guest]
-        # if @guest.save
-        #     format.html { redirect_to @guest, notice: 'Guest was successfully created.' }
-        #     format.json { render json: @guest, status: :created, location: @guest }
-        # else
-        #     format.html { render action: "new" }
-        #     format.json { render json: @guest.errors, status: :unprocessable_entity }
-        # end
-        redirect_to guests_path
+
+
+        if (params[:last_name] && params[:first_name])
+            Guest.find_or_initialize_by_first_name_and_last_name(
+                 params[:first_name], params[:last_name]
+                 ).tap do |a|
+                    a.birthday = params[:birthday]
+                    a.current_city = params[:current_city]
+                    a.tracker_id = params[:tracker_id]
+                    @guest = a
+                end.save!
+
+            #@importance = {:interest_id => params[:interest_id], :guest_id => params[:guest_id], :importance => params[:importance]}
+            #Importance.create @importance
+                render xml: @guest
+        else
+            Guest.create params[:guest]
+            redirect_to guests_path
+        end
+
+       # render json: @importance
+        # redirect_to guests_path
     end
 
     # GET /guests/new
@@ -40,7 +54,7 @@ class GuestsController < ApplicationController
           @guest = Guest.new
           respond_to do |format|
             format.html #index.html.erb
-            format.json { render json: @guests }
+            format.json { render json: @guest }
         end
     end
 

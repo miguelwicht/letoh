@@ -1,5 +1,5 @@
 <% content_for :head do %>
-    <%= javascript_include_tag 'http://maps.google.com/maps/api/js?sensor=false' %>
+<%= javascript_include_tag 'http://maps.google.com/maps/api/js?sensor=false' %>
 <% end %>
 
 <!-- <h1 class="route">Personalized route</h1> -->
@@ -17,9 +17,9 @@
     <div class="half">
         <h2>Interests</h2>
         <ul>
-        <% @interests.each do |interest| %>
+            <% @interests.each do |interest| %>
             <li><%= interest.name %></li>
-        <% end %>
+            <% end %>
         </ul>
     </div>
 </div>
@@ -32,13 +32,35 @@
         <h2>Points of Interest</h2>
 
         <div id="pois" data-pois="<%= @map_pois.flatten(1).to_a.uniq.to_json %>">
+          <% @user_pois.each_with_index do |cat, index| %>
+          <h3><%= cat[2] %> <img src="http://maps.google.com/mapfiles/ms/icons/red-dot.png" width="24" height="24" alt="<%= cat[2] %>" class="marker-color" data-color="<%= index %>"/></h3>
           <ul>
-          <% @map_pois.each do |poi| %>
-            <li><%=poi.name %></li>
-          <% end %>
-        </div>
+            <% cat[0].count.times do |i| %>
+            <% if (i < cat[1]) %>
+            <li><%= cat[0][i].poi.name %></li>
+            <% end %>
+            <%end %>
+        </ul>
+        <% end %>
     </div>
 </div>
+</div>
+<%
+        @pois = []
+        @user_pois.each_with_index do |cat, index|
+            @pois[index] = [];
+            @pois[index][0] = cat[2] #interest name
+            @pois[index][1] = []
+            cat[0].count.times do |i|
+                if (i < cat[1])
+                    @pois[index][1].push(cat[0][i].poi)
+                end
+            end
+        end
+        %>
+<div id="pois_by_interest" data-pois ="<%= @pois.to_json %>"></div>
+
+
 
 
 
@@ -66,7 +88,7 @@
       </div>
     </div>
     <input type="submit" value="Calculate route">
-  </form> -->
+</form> -->
 <!--   <div id="directionsPanel">
     Enter a destination and click "Calculate route".
-  </div> -->
+</div> -->

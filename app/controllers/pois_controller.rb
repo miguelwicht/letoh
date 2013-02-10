@@ -68,16 +68,21 @@ class PoisController < ApplicationController
 
         #query the matching pois for each interest
         #categories
-        user_pois = []
+        @user_pois = []
         @interests.each_with_index do |interest, index|
-            user_pois[index] = []
-            user_pois[index].push(Categorization.where(:interest_id => interest.id))
-            user_pois[index].push( ((Importance.where(:guest_id => params[:id]).where(:interest_id => interest.id).sum('importance').to_f / @sum) * 8).round )
+            @user_pois[index] = []
+            #@user_pois[index].push(Categorization.where(:interest_id => interest.id).includes(:poi))
+            @user_pois[index].push(Categorization.all(:joins => :poi, :conditions => {:categorizations => {:interest_id => interest.id}}))
+            #user_pois[index].push( ((Importance.where(:guest_id => params[:id]).where(:interest_id => interest.id).sum('importance').to_f / @sum) * 8).round )
+            @user_pois[index].push( ((Importance.where(:guest_id => params[:id]).where(:interest_id => interest.id).sum('importance').to_f / @sum) * 8).round )
+            @user_pois[index].push(interest.name)
         end
+
+        #@int = Interest.includes(:importances).where(:importances => {:guest_id => params[:id]}).joins(:Categorization.where(:interest_id => interest.id))
 
         #rearrange the pois
         map_pois = []
-        user_pois.each_with_index do |cat, index|
+        @user_pois.each_with_index do |cat, index|
             cat[1].times do |i|
                 if cat[0].count > i
                     map_pois.push(Poi.includes(:categorizations).where(:categorizations =>{:poi_id => cat[0][i-1].poi_id}))
@@ -90,6 +95,19 @@ class PoisController < ApplicationController
         respond_to do |format|
             format.html #index.html.erb
             format.json { render json: @map_pois }
+        end
+
+
+        @pois = []
+        @user_pois.each_with_index do |cat, index|
+            @pois[index] = [];
+            @pois[index][0] = cat[2] #interest name
+            @pois[index][1] = []
+            cat[0].count.times do |i|
+                if (i < cat[1])
+                    @pois[index][1].push(cat[0][i].poi.name)
+                end
+            end
         end
 
 
