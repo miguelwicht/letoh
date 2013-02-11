@@ -68,3 +68,7 @@ nav, .nav {
 .half.map-wp {
     min-width: 400px;
 }
+
+.infoWindow {
+    max-width: 300px;
+}

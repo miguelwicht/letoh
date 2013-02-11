@@ -98,9 +98,9 @@ function initialize() {
                 position: markerLatLng,
                 map: map,
                 icon: color,
-                title: poi.name
+                title: poi.address
             });
-            var contentString = poi.name;
+            var contentString = '<div class="infoWindow"><h4>'+poi.name+'</h4><p>Coordinates: '+poi.lat+','+poi.long+'<br/>Address: '+poi.address+'<br/>Avg. Duration: '+poi.duration+' minutes</p><p>'+poi.description+'</p></div>';
             var infowindow = new google.maps.InfoWindow({
                 content: contentString
             });

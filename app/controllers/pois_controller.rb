@@ -105,7 +105,7 @@ class PoisController < ApplicationController
             @pois[index][1] = []
             cat[0].count.times do |i|
                 if (i < cat[1])
-                    @pois[index][1].push(cat[0][i].poi.name)
+                    @pois[index][1].push(cat[0][i].poi.address)
                 end
             end
         end
