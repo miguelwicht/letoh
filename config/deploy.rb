@@ -1,18 +1,29 @@
 # Add RVM's lib directory to the load path.
-$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
+#:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 
 # Load RVM's capistrano plugin.
-require "rvm/capistrano"
+#require "rvm/capistrano"
+require "bundler/capistrano"
 
-set :rvm_ruby_string, '{{1.9.2@rails3}}'
-#set :rvm_type, :user  # Don't use system-wide RVM
+set :rvm_ruby_string, '1.9.3p374'
+#set :rvm_type, :system  # Don't use system-wide RVM
+set :rvm_bin_path, '/usr/local/rvm/bin'
+set :rails_env, "development"
 
-set :user, "{{deployer}}"
-#set :password, "{{password}}"
-set :domain, "{{letoh.miguelwicht.com}}"
-set :application, "{{Letoh}}"
-set :repository,  "git@github.com:{{miguelwicht}}/{{letoh}}.git"
+set :user, "root"
+#set :password, "password"
+set :domain, "miguelwicht.com"
+set :application, "Letoh"
+set :repository,  "git@github.com:miguelwicht/letoh.git"
 set :deploy_to, "/var/www/vhosts/miguelwicht.com/letoh"
+ssh_options[:forward_agent] = true
+default_run_options[:pty] = true
+
+# set :default_environment, {
+#   'PATH' => "#{deploy_to}/bin:$PATH",
+#   'GEM_HOME' => "#{deploy_to}/gems"
+# }
+
 
 set :scm, :git
 # Or: 'accurev', 'bzr', 'cvs', 'darcs', 'git', 'mercurial', 'perforce', 'subversion' or 'none'
